@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+
+    <title>My Weather App</title>
+    <style>
+
+      .family {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .pink {
+        color: deeppink;
+      }
+
+      .enter {
+        background-color: #ffffef;
+        width: 75%;
+        padding: 8px;
+        border-radius: 5px;
+      }
+
+      .meet {
+        background-color: blue;
+        color: white;
+        width: 15%;
+        padding: 8px;
+        border-radius: 5px;
+      }
+       .foot {
+        text-align: center;
+        font-size:smaller;
+      }
+      .action {
+        border: 2px solid black;
+        width:500px;
+        padding: 40px;
+        background-color:white;
+        margin:20px;
+      }
+      .pot {
+        color:red;
+        border: 2px solid black;
+        width:500px;
+        padding: 40px;
+        background-color:white;
+        margin:20px;
+      }
+      .temperate {
+      position: absolute;
+      top:126px;
+      right:46%;
+      margin:0px;
+      font-weight:300;
+      }
+
+      .number {
+      position: absolute;
+      top:120px;
+      right:48%;
+      margin:0px;
+      font-size:45px;
+      }
+       .weather {
+      position: absolute;
+      top:130px;
+      right:55%;
+      margin:0px;
+      font-size:25px;
+      }
+    .fine {
+      background-color:blue;
+    }
+    </style>
+  </head>
+  <body class="fine">
+    <div class="action">
+      <header>
+        <form id = "Search-form">
+          <input required class="enter" type="text" placeholder="Enter a city" id = "search-input"/>
+          <input class="meet" type="submit" value="search" />
+        </form>
+      </header>
+      <main>
+        <h1>
+          <strong class="family" id = "current-city">Nigeria</strong>
+        </h1>
+
+        <p>
+          <span class = "city" id = "current-time">Saturday 15:32,</span> moderate rain
+          <br />
+          Humidity:<strong class="pink"> 87%</strong>, Wind:<strong
+            class="pink"
+          >
+            7.2km/h</strong
+          >
+        </p>
+         <p>
+          <div class="weather">☀️</div>
+        <div class="number" id = "current-temperature"> 24</div>
+        <div class="temperate">°C</div>
+        </p>
+      </main>
+      <footer class="foot">
+            This Project was coded by
+            <a href="olu"> Ajewole Olubukola</a>
+            and is
+            <a href="git"> on GitHub </a>
+            and
+            <a href="net">hosted on Netlify </a>
+      </footer>
+      <script>
+
+         function displayTemperature(response) {
+        let temperatureElement = document.querySelector("#current-temperature");
+        let temperature = Math.round(response.data.temperature.current);
+      
+        let cityElement = document.querySelector("#current-city");
+        cityElement.innerHTML = response.data.city; 
+        temperatureElement.innerHTML = temperature;
+        }
+
+        function search(event) {
+          event.preventDefault();
+          let searchInputElement = document.querySelector("#search-input");
+        
+          let city = searchInputElement.value;
+          let apiKey = "c08f3oafa3b7348t2f1a6604ad1f73ea";
+          let apiUrl =
+        `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+
+          axios.get(apiUrl).then(displayTemperature);
+
+        }
+        
+        let searchForm = document.querySelector("#searh-form");
+        searchForm = addEventListener("submit", search);
+
+        let now = new Date();
+      let p = document.querySelector("#current-time");
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      let day = days[now.getDay()];
+      p.innerHTML = `${day}, ${hours}:${minutes}`;
+
+    </script>
+    </div>
+  </body>
+</html>
+
